@@ -1,7 +1,13 @@
 import { StyleSheet } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import {Colors} from './Colors'
+import React from "react";
 
 const styles = StyleSheet.create({
+    background:{
+        backgroundColor: Colors.background,
+        margin: 20,
+    },
     container:{
         flex: 1,
         flexDirection: 'column',
@@ -68,7 +74,67 @@ const styles = StyleSheet.create({
         padding: 10,
         color: '#fff'
     },
-    
+    box:{
+        width: 90,
+        height: 90,
+        borderRadius: 10,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: 10
+    },
+    smallLogo:{
+        width: 60,
+        height: 60,
+        resizeMode: 'contain',
+        alignSelf: 'center',
+        marginTop: 10
+    },
+    boxTitle:{
+        fontSize: 14,
+        fontWeight: '500',
+        opacity: 0.8,
+        paddingTop: 5
+    },
+    boxSubtitle:{
+        fontSize: 12,
+        fontWeight: '200',
+        color: 'purple',
+        paddingTop: 5
+    },
+    filter:{
+        flexDirection: 'row',
+        },
+    filterIcon:{
+        width: 40,
+        height: 40,
+        backgroundColor: Colors.pink,
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+        shadowColor: 'black',
+        shadowOffset: {width: 5, height: 0},
+        shadowRadius: 15,
+        shadowOpacity: 0.2,
+        zIndex: 5
+    },
+    filterData:{
+        width: 90,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5
+    },
+    filterText:{
+        fontSize: 12,
+        color: 'white',
+        fontWeight: '400',
+    },
+    topBar:{
+        flexDirection: 'row',
+        marginTop: 60,
+        justifyContent: 'space-between',
+        alignItems: 'baseline'
+    }
   });
 
   export {styles};

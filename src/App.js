@@ -9,8 +9,8 @@
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import LoginView from './Views/LoginView';
-import TabView from './Views/TabView'
+import LoginView from './views/LoginView';
+import TabView from './views/TabView'
 
 const Stack = createNativeStackNavigator();
 
