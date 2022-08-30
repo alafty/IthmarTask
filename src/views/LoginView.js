@@ -9,7 +9,7 @@ const LoginView = ({navigation}) => {
     return(
         <View style= {styles.container}>
             <View style= {styles.header}>
-                <Image source={require('../Assets/Logo.png')} style= {styles.logo} />
+                <Image source={require('../../Assets/Logo.png')} style= {styles.logo} />
                 <View>
                     <Text style= {styles.heading}> Welcome Back </Text>
                     <Text style= {styles.footnote}> Please sign in to continue </Text>
