@@ -6,6 +6,8 @@ import { Colors } from "../Colors";
 import { LoginButton } from "./LoginView";
 import {logout} from '../redux/Actions'
 
+//wraps profile view with a provider 
+//to use dispatch
 const ProfileWrapper = ({navigation}) => {
     return (
         <Provider store={store}>
@@ -13,6 +15,8 @@ const ProfileWrapper = ({navigation}) => {
         </Provider>
       )
 }
+
+//main profile screen
 const ProfileView = ({navigation}) => {
     const data = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
@@ -33,6 +37,11 @@ const ProfileView = ({navigation}) => {
     );
 }
 
+//render data type and content 
+//e.g. (
+//    username
+//    Ithmar 
+//    )
 const DataItem = (props) =>{
     return(
         <View style={{alignItems: 'flex-start'}}>

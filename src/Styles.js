@@ -127,6 +127,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'baseline'
+    },
+    error:{
+        fontSize: 14, 
+        paddingLeft: 20, 
+        color: 'red', 
+        marginBottom: 0, 
+        fontWeight: '600'
     }
   });
 

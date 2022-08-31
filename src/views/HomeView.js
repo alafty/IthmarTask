@@ -1,5 +1,5 @@
 import * as React from "react";
-import {View, Text, FlatList, Image, Pressable, ScrollView, ImageBackground} from "react-native"
+import {View, Text, FlatList, Pressable, Image, ScrollView} from "react-native"
 import {styles} from '../Styles'
 import {Colors} from '../Colors'
 import { useEffect } from "react";
@@ -10,6 +10,8 @@ import LinearGradient from "react-native-linear-gradient";
 import { LoginButton } from "./LoginView";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+//wraps homeview with a provider 
+//in order to use dispatch
 const HomeWrapper = ({navigation}) => {
     return (
       <Provider store={store}>
@@ -18,39 +20,14 @@ const HomeWrapper = ({navigation}) => {
     )
   }
 
-function renderLoginButton({navigation}) {
-    const data = useSelector(state => state.userReducer);
-    const welcomeMessage = 'Welcome Back, ' + data.username + ''
-    if (!data.loggedIn) {
-    return(
-        <SafeAreaView style={{
-            alignItems: 'center', 
-            paddingTop: 20,
-            backgroundColor: Colors.background,
-            zIndex: 10,
-            shadowColor: 'black',
-            shadowOffset: {width: 5, height: -10},
-            shadowRadius: 15,
-            shadowOpacity: 0.2,
-            borderRadius: 20
-            }}>
-            <Text style={[styles.heading, {fontSize: 20, color: 'black', opacity: 0.8}]}> You're Not Logged In</Text>
-            <Pressable onPress={() => navigation.navigate('login-view')} style={{width: '100%'}}>
-                <LoginButton title= "Login" />
-            </Pressable>
-        </SafeAreaView>
-        
-        );
-    }
-}
-
+//home screen
 const HomeView = ({navigation}) => {
     const services = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchData());
-        console.warn(services);
+        //console.warn(services);
       },[]);
 
       var GovernOrgs = "Govern. Orgs";
@@ -89,19 +66,49 @@ const HomeView = ({navigation}) => {
     );
 }
 
-const HomeBox = (props) => {
-    const image = {uri: props.uri};
+//renders "you're not logged in" section 
+//when user hasn't logged in
+function renderLoginButton({navigation}) {
+    const data = useSelector(state => state.userReducer);
+    const welcomeMessage = 'Welcome Back, ' + data.username + ''
+    if (!data.loggedIn) {
     return(
-        <View style={{alignItems: 'center'}}>
-                <Pressable>
-                    <Image source={{uri: props.uri}} style={styles.boxLogo} />
-                </Pressable>
-            <Text style={styles.boxTitle}> {props.title} </Text>
-            <Text style={styles.boxSubtitle}> {props.subtitle} </Text>
-        </View>
-    );  
+        <SafeAreaView style={{
+            alignItems: 'center', 
+            paddingTop: 20,
+            backgroundColor: Colors.background,
+            zIndex: 10,
+            shadowColor: 'black',
+            shadowOffset: {width: 5, height: -10},
+            shadowRadius: 15,
+            shadowOpacity: 0.2,
+            borderRadius: 20
+            }}>
+            <Text style={[styles.heading, {fontSize: 20, color: 'black', opacity: 0.8}]}> You're Not Logged In</Text>
+            <Pressable onPress={() => navigation.navigate('login-view')} style={{width: '100%'}}>
+                <LoginButton title= "Login" />
+            </Pressable>
+        </SafeAreaView>
+        
+        );
+    }
 }
 
+//main box component in homescreen 
+//including image, title, and subtitle
+const HomeBox = (props) =>  { 
+    return (
+    <View style={{alignItems: 'center'}}>
+            <Pressable>
+                <Image source={{uri: props.uri}} style={styles.boxLogo} />
+            </Pressable>
+        <Text style={styles.boxTitle}> {props.title} </Text>
+        <Text style={styles.boxSubtitle}> {props.subtitle} </Text>
+    </View>
+);
+}
+
+//renders a whole sector's boxes 
 const SectorView = (serviceArray) => {
     let colorsArray =  ['#26ad6a', '#ff0000', '#ff5f44', '#ff5f44', '#006536', '#20347c', '#ef9e81', '#ef9e81', '#fdbf26', '#00af14', '#3d5cab', '#ea5921v' ];
     const renderItem = ({ item }) => (
@@ -109,8 +116,7 @@ const SectorView = (serviceArray) => {
         uri= {item.logo}
         title={item.name}
         subtitle={item.subtitle}
-        color= {colorsArray[Math.floor(Math.random() * colorsArray.length)]}
-        />
+        color= {colorsArray[Math.floor(Math.random() * colorsArray.length)]} />
       );
     return(
     <FlatList 
@@ -123,6 +129,7 @@ const SectorView = (serviceArray) => {
     );
 }
 
+//redners location filter element on top
 const FilterBox = (props) => {
     return(
         <View style= {styles.filter}>
@@ -134,6 +141,8 @@ const FilterBox = (props) => {
     );
 }
 
+//renders sector title and see more button
+//e.g. (Banking         see more)
 const Category = (props) => {
     return(
         <View style={{
