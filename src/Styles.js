@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     loginButton:{
         width: '90%',
         borderRadius: 8,
-        margin: 20
+        marginHorizontal: 20,
+        marginTop: 20
     },
     heading:{
         fontSize: 32,
@@ -124,7 +125,6 @@ const styles = StyleSheet.create({
     },
     topBar:{
         flexDirection: 'row',
-        marginTop: 60,
         justifyContent: 'space-between',
         alignItems: 'baseline'
     }

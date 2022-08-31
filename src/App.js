@@ -9,8 +9,9 @@
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import LoginView from './views/LoginView';
+import LoginWrapper from './views/LoginView';
 import TabView from './views/TabView'
+import HomeView from './views/HomeView'
 
 const Stack = createNativeStackNavigator();
 
@@ -19,14 +20,19 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-        name= "login-page"
-        component= {LoginView}
+        name= "login-view"
+        component= {LoginWrapper}
         options= {{ headerShown: false}}
         />
         <Stack.Screen
-        name= "home-page"
+        name= "tab-view"
         component={TabView}
         options= {{ headerShown: false}}
+        />
+        <Stack.Screen
+        name= "home-view"
+        component={HomeView}
+        options= {{headerShown: false}}
         />
       </Stack.Navigator>
 

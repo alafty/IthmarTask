@@ -5,27 +5,52 @@ import {Colors} from '../Colors'
 import { useEffect } from "react";
 import {useSelector, useDispatch, Provider} from 'react-redux'
 import { store } from "../redux/Store";
-import {fetchData, fetchMoreData}  from "../redux/Actions";
+import {fetchData}  from "../redux/Actions";
 import LinearGradient from "react-native-linear-gradient";
-import { Home } from "@material-ui/icons";
-import { padding } from "@mui/system";
+import { LoginButton } from "./LoginView";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-
-const HomeWrapper = () => {
+const HomeWrapper = ({navigation}) => {
     return (
       <Provider store={store}>
-        <HomeView />
+        <HomeView navigation={navigation}/>
       </Provider>
     )
   }
 
-const HomeView = () => {
+function renderLoginButton({navigation}) {
+    const data = useSelector(state => state.userReducer);
+    const welcomeMessage = 'Welcome Back, ' + data.username + ''
+    if (!data.loggedIn) {
+    return(
+        <SafeAreaView style={{
+            alignItems: 'center', 
+            paddingTop: 20,
+            backgroundColor: Colors.background,
+            zIndex: 10,
+            shadowColor: 'black',
+            shadowOffset: {width: 5, height: -10},
+            shadowRadius: 15,
+            shadowOpacity: 0.2,
+            borderRadius: 20
+            }}>
+            <Text style={[styles.heading, {fontSize: 20, color: 'black', opacity: 0.8}]}> You're Not Logged In</Text>
+            <Pressable onPress={() => navigation.navigate('login-view')} style={{width: '100%'}}>
+                <LoginButton title= "Login" />
+            </Pressable>
+        </SafeAreaView>
+        
+        );
+    }
+}
+
+const HomeView = ({navigation}) => {
     const services = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchData());
-        console.warn(services.services[0]);
+        console.warn(services);
       },[]);
 
       var GovernOrgs = "Govern. Orgs";
@@ -33,34 +58,38 @@ const HomeView = () => {
 
       //console.warn(services.services[0].Banking[0].logo);
     return(
-        <ScrollView style= {styles.background}>
-            <View style= {styles.topBar}>
-                <FilterBox title="Cairo,Egypt"/>
-                <View style={{
-                    width: 40, 
-                    height: 40, 
-                    backgroundColor: 'white', 
-                    borderRadius: 5}} />
-            </View>
-            <Category sectorTitle= "Banking" />
-            <SectorView serviceArray= {services.services[0].Banking} />
-            <Category sectorTitle= "Hospitals" />
-            <SectorView serviceArray= {services.services[1].Hospitals} />
-            <Category sectorTitle= "Govern Orgs." />
-            <SectorView serviceArray= {services.services[2][GovernOrgs]} />
-            <Category sectorTitle= "Telecom Co." />
-            <SectorView serviceArray= {services.services[3][Telecom]} />
-            <Category sectorTitle= "Insurance" />
-            <SectorView serviceArray= {services.services[4].Insurance} />
-            <Category sectorTitle= "Web" />
-            <SectorView serviceArray= {services.services[5].Web} />
-
-        </ScrollView>
+        <SafeAreaView edges={['top']} >
+            {renderLoginButton({navigation})}
+            <ScrollView style= {styles.background}>
+            
+                <View style= {styles.topBar}>
+                    <FilterBox title="Cairo,Egypt"/>
+                    <View style={{
+                        width: 40, 
+                        height: 40, 
+                        backgroundColor: 'white', 
+                        borderRadius: 5}} >
+                    </View>
+                </View>
+                <Category sectorTitle= "Banking" />
+                <SectorView serviceArray= {services.services[0].Banking} />
+                <Category sectorTitle= "Hospitals" />
+                <SectorView serviceArray= {services.services[1].Hospitals} />
+                <Category sectorTitle= "Govern Orgs." />
+                <SectorView serviceArray= {services.services[2][GovernOrgs]} />
+                <Category sectorTitle= "Telecom Co." />
+                <SectorView serviceArray= {services.services[3][Telecom]} />
+                <Category sectorTitle= "Insurance" />
+                <SectorView serviceArray= {services.services[4].Insurance} />
+                <Category sectorTitle= "Web" />
+                <SectorView serviceArray= {services.services[5].Web} />
+                
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
 const HomeBox = (props) => {
-    console.warn(props.uri);
     const image = {uri: props.uri};
     return(
         <View style={{alignItems: 'center'}}>
