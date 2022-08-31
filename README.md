@@ -9,16 +9,22 @@ This project was created as a task from Ithmar Solutions. The PDF specifying the
 3- Fetching data from an endpoint and populating the app using it <br>
 4- Adapting to logged and non-logged users <br>
 
+-----------------------------
 *Extra Features*
+
 1- Creating a logout feature for logged in users <br>
 
+----------------------------
 *Problems Faced*
+
 1- Exporting custom components into their own files <br>
 2- Adding vector icons using react-native-vector-icons <br>
 3- HomeView occasionally ignores the gives data <br> 
 (just cut the components, refresh, reach the HomeView, and paste them again) <br>
 
+----------------------------
 *Project Heirarchy*
+
 1- src: main directory for the working files <br>
 2- redux: a directory for redux-related files (actions, reducer, and store) <br>
 3- Views: i) Favourites View: dummy view <br>
@@ -30,5 +36,7 @@ This project was created as a task from Ithmar Solutions. The PDF specifying the
 5- Colors.js: main colors used in the project <br>
 6- Styles.js: stylesheet for the whole project <br>
 
+----------------------------
 **DISCLAIMER**
+
 I do not own any assets in this app; it was fetched from an API given in the task
