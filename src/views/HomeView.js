@@ -9,6 +9,8 @@ import {fetchData}  from "../redux/Actions";
 import LinearGradient from "react-native-linear-gradient";
 import { LoginButton } from "./LoginView";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SelectDropdown from 'react-native-select-dropdown'
+
 
 //wraps homeview with a provider 
 //in order to use dispatch
@@ -24,7 +26,7 @@ const HomeWrapper = ({navigation}) => {
 const HomeView = ({navigation}) => {
     const services = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
-
+    const locations = ['Cairo, Egypt', 'Giza, Egypt', 'Alexandria, Egypt'];
     useEffect(() => {
         dispatch(fetchData());
         //console.warn(services);
@@ -40,12 +42,15 @@ const HomeView = ({navigation}) => {
             <ScrollView style= {styles.background}>
             
                 <View style= {styles.topBar}>
-                    <FilterBox title="Cairo,Egypt"/>
+                    <FilterBox locations={locations}/>
                     <View style={{
                         width: 40, 
-                        height: 40, 
+                        height: 40,
+                        justifyContent: 'center',
+                        alignItems: 'center',
                         backgroundColor: 'white', 
-                        borderRadius: 5}} >
+                        borderRadius: 5}}>
+                            <Image source={require('../../Assets/Magnify.png')} style={{width: 20, height: 20, resizeMode: 'center'}} />
                     </View>
                 </View>
                 <Category sectorTitle= "Banking" />
@@ -60,7 +65,7 @@ const HomeView = ({navigation}) => {
                 <SectorView serviceArray= {services.services[4].Insurance} />
                 <Category sectorTitle= "Web" />
                 <SectorView serviceArray= {services.services[5].Web} />
-                
+                 
             </ScrollView>
         </SafeAreaView>
     );
@@ -70,7 +75,6 @@ const HomeView = ({navigation}) => {
 //when user hasn't logged in
 function renderLoginButton({navigation}) {
     const data = useSelector(state => state.userReducer);
-    const welcomeMessage = 'Welcome Back, ' + data.username + ''
     if (!data.loggedIn) {
     return(
         <SafeAreaView style={{
@@ -132,11 +136,25 @@ const SectorView = (serviceArray) => {
 //redners location filter element on top
 const FilterBox = (props) => {
     return(
-        <View style= {styles.filter}>
-                <View style={styles.filterIcon}/>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={[Colors.gradient1, Colors.gradient2]} style={styles.filterData}>
-                    <Text style={styles.filterText}>{props.title}</Text>
-                </LinearGradient>
+        <View style= {{flexDirection: 'row'}}>
+                <View style={styles.filterIcon}>
+                    <Image source={require('../../Assets/Map-Pin.png')}  style={{width: 30, height: 30}}/>
+                </View>
+                <SelectDropdown 
+                buttonStyle={styles.dropdown}
+                buttonTextStyle= {styles.filterText}
+                rowStyle={styles.dropdownItem}
+                rowTextStyle={{fontSize: 12, color: 'black'}}
+                data={props.locations}
+                onSelect={(selectedItem, index) => {
+                  console.log(selectedItem, index);
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }} />
         </View>
     );
 }
