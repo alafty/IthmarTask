@@ -40,7 +40,8 @@ function fillData(action) {
                     "key": element.clients[i].serviceProviderKey,
                     "name": element.clients[i].serviceProviderName,
                     "branches": element.clients[i].noOfBranches,
-                    "logo": element.clients[i].serviceProviderLogo
+                    "logo": element.clients[i].serviceProviderLogo,
+                    "subtitle": element.clients[i].bssName,
                 });
             
         }

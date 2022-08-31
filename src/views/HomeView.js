@@ -25,9 +25,11 @@ const HomeView = () => {
 
     useEffect(() => {
         dispatch(fetchData());
-        console.warn(services);
+        //console.warn(services);
       },[]);
 
+      var GovernOrgs = "Govern. Orgs";
+      var Telecom= "Telecom Co.";
     return(
         <ScrollView style= {styles.background}>
             <View style= {styles.topBar}>
@@ -39,17 +41,18 @@ const HomeView = () => {
                     borderRadius: 5}} />
             </View>
             <Category sectorTitle= "Banking" />
-            <SectorView />
+            <SectorView serviceArray= {services.services[0].Banking} />
             <Category sectorTitle= "Hospitals" />
-            <SectorView />
+            <SectorView serviceArray= {services.services[1].Hospitals} />
             <Category sectorTitle= "Govern Orgs." />
-            <SectorView />
+            <SectorView serviceArray= {services.services[2][GovernOrgs]} />
             <Category sectorTitle= "Telecom Co." />
-            <SectorView />
+            <SectorView serviceArray= {services.services[3][Telecom]} />
             <Category sectorTitle= "Insurance" />
-            <SectorView />
+            <SectorView serviceArray= {services.services[4].Insurance} />
             <Category sectorTitle= "Web" />
-            <SectorView />
+            <SectorView serviceArray= {services.services[5].Web} />
+
         </ScrollView>
     );
 }
@@ -58,7 +61,7 @@ const HomeBox = (props) => {
     return(
         <View style={{alignItems: 'center'}}>
             <Pressable style= {[styles.box, {backgroundColor: props.color}]}>
-                <Image source={props.uri} style={styles.smallLogo}/>
+                <Image source={{uri: props.uri}} style={styles.smallLogo}/>
             </Pressable>
             <Text style={styles.boxTitle}> {props.title} </Text>
             <Text style={styles.boxSubtitle}> {props.subtitle} </Text>
@@ -66,17 +69,25 @@ const HomeBox = (props) => {
     );  
 }
 
-const SectorView = () => {
+const SectorView = (serviceArray) => {
+    let colorsArray =  ['#26ad6a', '#ff0000', '#ff5f44', '#ff5f44', '#006536', '#20347c', '#ef9e81', '#ef9e81', '#fdbf26', '#00af14', '#3d5cab', '#ea5921v' ];
+    const renderItem = ({ item }) => (
+        <HomeBox 
+        uri= {item.logo}
+        title={item.name}
+        subtitle={item.subtitle}
+        color= {colorsArray[Math.floor(Math.random() * colorsArray.length)]}
+        />
+      );
     return(
-        <ScrollView horizontal= {true} showsHorizontalScrollIndicator= {false} style={{paddingTop: 10}}>
-            <HomeBox uri={require('../../Assets/Logo.png')} title= 'Bank1' subtitle= 'Banking' color='green' />
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank2" color='blue' />
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank3" color='red' />
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank4" subtitle= 'Also Banking' color='black'/>
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank5" color='gray'/>
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank6" color='green'/>
-        </ScrollView>
-    )
+    <FlatList 
+    horizontal= {true} 
+    showsHorizontalScrollIndicator={false}
+    data= {serviceArray.serviceArray}
+    renderItem= {renderItem}
+    style= {{paddingTop: 10}}
+    />
+    );
 }
 
 const FilterBox = (props) => {
@@ -100,7 +111,7 @@ const Category = (props) => {
         }}>
             <Text style={{fontSize: 24, fontWeight: '700', opacity: 0.8}}> {props.sectorTitle} </Text>
 
-            <Text style= {{ fontSize: 14, fontWeight: '600', color: Colors.pink, }}> See More </Text>
+            <Text style= {{ fontSize: 14, fontWeight: '600', color: Colors.pink }}> See More </Text>
         </View>
     );
 }

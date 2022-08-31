@@ -21,7 +21,7 @@ export const fetchData = () => {
                     type: insertData,
                     payload: json
                 });
-                console.warn(json);
+                //console.warn(json);
             } else {
                 console.log('Unable to fetch!');
             }

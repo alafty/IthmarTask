@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingVertical: 20,
         shadowColor: 'black',
-        shadowOffset: {width: 5, height: -10},
+        shadowOffset: {width: 5, height: -5},
         shadowOpacity: 0.2,
         shadowRadius: 15,
     },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     smallLogo:{
         width: 60,
