@@ -1,5 +1,5 @@
 import * as React from "react";
-import {View, Text, FlatList, Image, Pressable, ScrollView} from "react-native"
+import {View, Text, FlatList, Image, Pressable, ScrollView, ImageBackground} from "react-native"
 import {styles} from '../Styles'
 import {Colors} from '../Colors'
 import { useEffect } from "react";
@@ -25,11 +25,13 @@ const HomeView = () => {
 
     useEffect(() => {
         dispatch(fetchData());
-        //console.warn(services);
+        console.warn(services.services[0]);
       },[]);
 
       var GovernOrgs = "Govern. Orgs";
       var Telecom= "Telecom Co.";
+
+      //console.warn(services.services[0].Banking[0].logo);
     return(
         <ScrollView style= {styles.background}>
             <View style= {styles.topBar}>
@@ -58,11 +60,13 @@ const HomeView = () => {
 }
 
 const HomeBox = (props) => {
+    console.warn(props.uri);
+    const image = {uri: props.uri};
     return(
         <View style={{alignItems: 'center'}}>
-            <Pressable style= {[styles.box, {backgroundColor: props.color}]}>
-                <Image source={{uri: props.uri}} style={styles.smallLogo}/>
-            </Pressable>
+                <Pressable>
+                    <Image source={{uri: props.uri}} style={styles.boxLogo} />
+                </Pressable>
             <Text style={styles.boxTitle}> {props.title} </Text>
             <Text style={styles.boxSubtitle}> {props.subtitle} </Text>
         </View>

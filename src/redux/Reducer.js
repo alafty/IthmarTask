@@ -40,7 +40,7 @@ function fillData(action) {
                     "key": element.clients[i].serviceProviderKey,
                     "name": element.clients[i].serviceProviderName,
                     "branches": element.clients[i].noOfBranches,
-                    "logo": element.clients[i].serviceProviderLogo,
+                    "logo": getImageURL(element.clients[i].serviceProviderLogo) ,
                     "subtitle": element.clients[i].bssName,
                 });
             
@@ -50,4 +50,7 @@ function fillData(action) {
     return returnData;
 }
 
+function getImageURL(path){
+    return 'http://165.22.1.13:9081/images' + path;
+}
 export default userReducer;
