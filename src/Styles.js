@@ -47,6 +47,24 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         color: 'black',
         margin: 20,
+
+    },
+    inputFocus:{
+        fontSize: 20,
+        backgroundColor: 'white',
+        width: '90%',
+        paddingVertical: 10,
+        paddingStart: 10,
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: Colors.pink,
+        marginVertical: 10,
+        color: 'black',
+        margin: 20,
+        shadowColor: 'black',
+        shadowOffset: {width: 0, height: 0},
+        shadowRadius: 20,
+        shadowOpacity: 0.1
     },
     loginButton:{
         width: '90%',
@@ -95,9 +113,6 @@ const styles = StyleSheet.create({
         color: 'purple',
         paddingTop: 5
     },
-    filter:{
-        flexDirection: 'row',
-        },
     filterIcon:{
         width: 40,
         height: 40,
@@ -108,15 +123,9 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 5, height: 0},
         shadowRadius: 15,
         shadowOpacity: 0.2,
-        zIndex: 5
-    },
-    filterData:{
-        width: 90,
-        height: 40,
-        alignItems: 'center',
+        zIndex: 5,
         justifyContent: 'center',
-        borderTopRightRadius: 5,
-        borderBottomRightRadius: 5
+        alignItems: 'center'
     },
     filterText:{
         fontSize: 12,
@@ -126,7 +135,7 @@ const styles = StyleSheet.create({
     topBar:{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'baseline'
+        alignItems: 'flex-end'
     },
     error:{
         fontSize: 14, 
@@ -134,6 +143,15 @@ const styles = StyleSheet.create({
         color: 'red', 
         marginBottom: 0, 
         fontWeight: '600'
+    },
+    dropdown:{
+        width: 110,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
+        backgroundColor: Colors.gradient2
     }
   });
 

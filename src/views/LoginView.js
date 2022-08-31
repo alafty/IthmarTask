@@ -24,6 +24,8 @@ const LoginView = ({navigation}) => {
     const dispatch = useDispatch();
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
+    const [userFocus, setUserFocus] = useState(false);
+    const [passFocus, setPassFocus] = useState(false);
 
     return(
         <View style= {styles.container}>
@@ -41,8 +43,8 @@ const LoginView = ({navigation}) => {
             <View style= {styles.footer}>
                 
                 <Text style={styles.error}>{error}</Text>
-                <TextInput  autoCorrect={false} style= {styles.input} placeholder="Username" onChangeText={newText => setUsername(newText)}/>
-                <TextInput secureTextEntry={true} style= {styles.input} placeholder="Password"/>
+                <TextInput onFocus={() => {setUserFocus(true)}} onBlur={() => {setUserFocus(false)}} autoCorrect={false} style= {userFocus ?  styles.inputFocus : styles.input} placeholder="Username" onChangeText={newText => setUsername(newText)}/>
+                <TextInput onFocus= {() => {setPassFocus(true)}} onBlur={() => {setPassFocus(false)}} secureTextEntry={true} style= {passFocus ? styles.inputFocus : styles.input} placeholder="Password"/>
 
                 <Pressable onPress={() => {
                     if(username != null && username != ''){
