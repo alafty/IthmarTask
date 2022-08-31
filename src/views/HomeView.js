@@ -1,25 +1,50 @@
 import * as React from "react";
-import {View, Text, FlatList, Image, Pressable, ScrollView} from "react-native"
+import {View, Text, FlatList, Image, Pressable, ScrollView, ImageBackground} from "react-native"
 import {styles} from '../Styles'
 import {Colors} from '../Colors'
 import { useEffect } from "react";
 import {useSelector, useDispatch, Provider} from 'react-redux'
 import { store } from "../redux/Store";
-import {fetchData, fetchMoreData}  from "../redux/Actions";
+import {fetchData}  from "../redux/Actions";
 import LinearGradient from "react-native-linear-gradient";
-import { Home } from "@material-ui/icons";
-import { padding } from "@mui/system";
+import { LoginButton } from "./LoginView";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-
-const HomeWrapper = () => {
+const HomeWrapper = ({navigation}) => {
     return (
       <Provider store={store}>
-        <HomeView />
+        <HomeView navigation={navigation}/>
       </Provider>
     )
   }
 
-const HomeView = () => {
+function renderLoginButton({navigation}) {
+    const data = useSelector(state => state.userReducer);
+    const welcomeMessage = 'Welcome Back, ' + data.username + ''
+    if (!data.loggedIn) {
+    return(
+        <SafeAreaView style={{
+            alignItems: 'center', 
+            paddingTop: 20,
+            backgroundColor: Colors.background,
+            zIndex: 10,
+            shadowColor: 'black',
+            shadowOffset: {width: 5, height: -10},
+            shadowRadius: 15,
+            shadowOpacity: 0.2,
+            borderRadius: 20
+            }}>
+            <Text style={[styles.heading, {fontSize: 20, color: 'black', opacity: 0.8}]}> You're Not Logged In</Text>
+            <Pressable onPress={() => navigation.navigate('login-view')} style={{width: '100%'}}>
+                <LoginButton title= "Login" />
+            </Pressable>
+        </SafeAreaView>
+        
+        );
+    }
+}
+
+const HomeView = ({navigation}) => {
     const services = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
 
@@ -28,55 +53,74 @@ const HomeView = () => {
         console.warn(services);
       },[]);
 
+      var GovernOrgs = "Govern. Orgs";
+      var Telecom= "Telecom Co.";
+
+      //console.warn(services.services[0].Banking[0].logo);
     return(
-        <ScrollView style= {styles.background}>
-            <View style= {styles.topBar}>
-                <FilterBox title="Cairo,Egypt"/>
-                <View style={{
-                    width: 40, 
-                    height: 40, 
-                    backgroundColor: 'white', 
-                    borderRadius: 5}} />
-            </View>
-            <Category sectorTitle= "Banking" />
-            <SectorView />
-            <Category sectorTitle= "Hospitals" />
-            <SectorView />
-            <Category sectorTitle= "Govern Orgs." />
-            <SectorView />
-            <Category sectorTitle= "Telecom Co." />
-            <SectorView />
-            <Category sectorTitle= "Insurance" />
-            <SectorView />
-            <Category sectorTitle= "Web" />
-            <SectorView />
-        </ScrollView>
+        <SafeAreaView edges={['top']} >
+            {renderLoginButton({navigation})}
+            <ScrollView style= {styles.background}>
+            
+                <View style= {styles.topBar}>
+                    <FilterBox title="Cairo,Egypt"/>
+                    <View style={{
+                        width: 40, 
+                        height: 40, 
+                        backgroundColor: 'white', 
+                        borderRadius: 5}} >
+                    </View>
+                </View>
+                <Category sectorTitle= "Banking" />
+                <SectorView serviceArray= {services.services[0].Banking} />
+                <Category sectorTitle= "Hospitals" />
+                <SectorView serviceArray= {services.services[1].Hospitals} />
+                <Category sectorTitle= "Govern Orgs." />
+                <SectorView serviceArray= {services.services[2][GovernOrgs]} />
+                <Category sectorTitle= "Telecom Co." />
+                <SectorView serviceArray= {services.services[3][Telecom]} />
+                <Category sectorTitle= "Insurance" />
+                <SectorView serviceArray= {services.services[4].Insurance} />
+                <Category sectorTitle= "Web" />
+                <SectorView serviceArray= {services.services[5].Web} />
+                
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
 const HomeBox = (props) => {
+    const image = {uri: props.uri};
     return(
         <View style={{alignItems: 'center'}}>
-            <Pressable style= {[styles.box, {backgroundColor: props.color}]}>
-                <Image source={props.uri} style={styles.smallLogo}/>
-            </Pressable>
+                <Pressable>
+                    <Image source={{uri: props.uri}} style={styles.boxLogo} />
+                </Pressable>
             <Text style={styles.boxTitle}> {props.title} </Text>
             <Text style={styles.boxSubtitle}> {props.subtitle} </Text>
         </View>
     );  
 }
 
-const SectorView = () => {
+const SectorView = (serviceArray) => {
+    let colorsArray =  ['#26ad6a', '#ff0000', '#ff5f44', '#ff5f44', '#006536', '#20347c', '#ef9e81', '#ef9e81', '#fdbf26', '#00af14', '#3d5cab', '#ea5921v' ];
+    const renderItem = ({ item }) => (
+        <HomeBox 
+        uri= {item.logo}
+        title={item.name}
+        subtitle={item.subtitle}
+        color= {colorsArray[Math.floor(Math.random() * colorsArray.length)]}
+        />
+      );
     return(
-        <ScrollView horizontal= {true} showsHorizontalScrollIndicator= {false} style={{paddingTop: 10}}>
-            <HomeBox uri={require('../../Assets/Logo.png')} title= 'Bank1' subtitle= 'Banking' color='green' />
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank2" color='blue' />
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank3" color='red' />
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank4" subtitle= 'Also Banking' color='black'/>
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank5" color='gray'/>
-            <HomeBox uri={require('../../Assets/Logo.png')} title= "Bank6" color='green'/>
-        </ScrollView>
-    )
+    <FlatList 
+    horizontal= {true} 
+    showsHorizontalScrollIndicator={false}
+    data= {serviceArray.serviceArray}
+    renderItem= {renderItem}
+    style= {{paddingTop: 10}}
+    />
+    );
 }
 
 const FilterBox = (props) => {
@@ -100,7 +144,7 @@ const Category = (props) => {
         }}>
             <Text style={{fontSize: 24, fontWeight: '700', opacity: 0.8}}> {props.sectorTitle} </Text>
 
-            <Text style= {{ fontSize: 14, fontWeight: '600', color: Colors.pink, }}> See More </Text>
+            <Text style= {{ fontSize: 14, fontWeight: '600', color: Colors.pink }}> See More </Text>
         </View>
     );
 }

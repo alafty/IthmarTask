@@ -21,7 +21,7 @@ return(
       options= {{ headerShown: false}}
       />
       <Tab.Screen
-      name= "profile"
+      name= "Profile"
       component={ProfileView}
       />
     </Tab.Navigator>

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingVertical: 20,
         shadowColor: 'black',
-        shadowOffset: {width: 5, height: -10},
+        shadowOffset: {width: 5, height: -5},
         shadowOpacity: 0.2,
         shadowRadius: 15,
     },
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     loginButton:{
         width: '90%',
         borderRadius: 8,
-        margin: 20
+        marginHorizontal: 20,
+        marginTop: 20
     },
     heading:{
         fontSize: 32,
@@ -74,20 +75,13 @@ const styles = StyleSheet.create({
         padding: 10,
         color: '#fff'
     },
-    box:{
+    boxLogo:{
         width: 90,
         height: 90,
-        borderRadius: 10,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginHorizontal: 10
-    },
-    smallLogo:{
-        width: 60,
-        height: 60,
-        resizeMode: 'contain',
+        resizeMode: 'cover' ,
         alignSelf: 'center',
-        marginTop: 10
+        borderRadius: 10,
+        marginHorizontal: 10
     },
     boxTitle:{
         fontSize: 14,
@@ -131,7 +125,6 @@ const styles = StyleSheet.create({
     },
     topBar:{
         flexDirection: 'row',
-        marginTop: 60,
         justifyContent: 'space-between',
         alignItems: 'baseline'
     }
