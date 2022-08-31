@@ -7,6 +7,8 @@ const initialState = {
     loggedIn: false
 }
 
+//main reducer to handle the actions
+//depending on action type
 function userReducer(state = initialState, action){
         switch(action.type){
             case insertData:

@@ -8,6 +8,8 @@ import { store } from '../redux/Store'
 import { login } from "../redux/Actions";
 import { useState } from "react";
 
+//wraps login view with a provider
+//to use dispatch
 const LoginWrapper = ({navigation}) => {
     return (
       <Provider store={store}>
@@ -16,6 +18,7 @@ const LoginWrapper = ({navigation}) => {
     )
   }
 
+//main login screen
 const LoginView = ({navigation}) => {
     const loginData = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
@@ -24,6 +27,8 @@ const LoginView = ({navigation}) => {
 
     return(
         <View style= {styles.container}>
+
+            {/* top half of screen with pink backgound*/}
             <View style= {styles.header}>
                 <Image source={require('../../Assets/Logo.png')} style= {styles.logo} />
                 <View>
@@ -32,8 +37,10 @@ const LoginView = ({navigation}) => {
                 </View>
             </View>
 
+            {/* bottom half of screen with white backgound*/}
             <View style= {styles.footer}>
-                <Text style={{fontSize: 14, paddingLeft: 20, color: 'red', marginBottom: 0, fontWeight: '600'}}>{error}</Text>
+                
+                <Text style={styles.error}>{error}</Text>
                 <TextInput  autoCorrect={false} style= {styles.input} placeholder="Username" onChangeText={newText => setUsername(newText)}/>
                 <TextInput secureTextEntry={true} style= {styles.input} placeholder="Password"/>
 
@@ -50,11 +57,14 @@ const LoginView = ({navigation}) => {
                     }
                     }}>
                     <LoginButton title="Login" />
-                    <Pressable 
-                    style={{flexDirection: 'row', justifyContent: 'flex-end', width: '100%'} }
+                </Pressable>
+                <Pressable style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    width: '100%'
+                    }}
                     onPress={() => navigation.navigate('home-view')}>
                         <Text style={[styles.footnote, {paddingEnd: 20}]}> Skip for now </Text>
-                    </Pressable>
                 </Pressable>
                 
 
@@ -64,6 +74,7 @@ const LoginView = ({navigation}) => {
     );
 }
 
+//Login Button Component
 export const LoginButton = (props) => {
     return(
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={[Colors.gradient1, Colors.gradient2]} style={styles.loginButton}>
@@ -71,4 +82,5 @@ export const LoginButton = (props) => {
         </LinearGradient>
     );
 }
+
 export default LoginWrapper;
